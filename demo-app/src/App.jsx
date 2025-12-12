@@ -13,7 +13,7 @@ function App() {
             Container Orchestration using ECR, ECS and CodePipeline
           </h1>
           <p className="text-gray-600 mb-6">
-            Version 1 — A production-ready setup for deploying containerized applications on AWS
+            Version 2 — A production-ready setup for deploying containerized applications on AWS
             with a fully automated CI/CD pipeline.
           </p>
         </div>

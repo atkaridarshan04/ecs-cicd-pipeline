@@ -159,13 +159,13 @@ resource "aws_security_group" "ecs" {
     security_groups = [aws_security_group.alb.id]
   }
 
-  # Allow outbound traffic for VPC endpoints (ECR, S3, CloudWatch)
+  # Allow outbound traffic for VPC endpoints and ECR access
   egress {
-    description = "Outbound for VPC endpoints"
+    description = "Outbound HTTPS for ECR and VPC endpoints"
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/16"]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = {

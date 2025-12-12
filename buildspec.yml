@@ -5,17 +5,19 @@ phases:
     commands:
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin 590183956795.dkr.ecr.eu-north-1.amazonaws.com
+      - IMAGE_TAG=${CODEBUILD_RESOLVED_SOURCE_VERSION:0:7}
+      - echo "Using image tag: $IMAGE_TAG"
   build:
     commands:
       - echo Building the Docker image...
       - docker build -t demo-app ./demo-app
-      - docker tag demo-app:latest 590183956795.dkr.ecr.eu-north-1.amazonaws.com/container-orchestration-repo
+      - docker tag demo-app:latest 590183956795.dkr.ecr.eu-north-1.amazonaws.com/container-orchestration-repo:$IMAGE_TAG
   post_build:
     commands:
       - echo Pushing the Docker image...
-      - docker push 590183956795.dkr.ecr.eu-north-1.amazonaws.com/container-orchestration-repo:latest
+      - docker push 590183956795.dkr.ecr.eu-north-1.amazonaws.com/container-orchestration-repo:$IMAGE_TAG
       - echo Writing image definitions...
-      - printf '[{"name":"app-container","imageUri":"590183956795.dkr.ecr.eu-north-1.amazonaws.com/container-orchestration-repo:latest"}]' > imagedefinitions.json
+      - printf '[{"name":"app-container","imageUri":"590183956795.dkr.ecr.eu-north-1.amazonaws.com/container-orchestration-repo:%s"}]' $IMAGE_TAG > imagedefinitions.json
 
 artifacts:
   files: imagedefinitions.json

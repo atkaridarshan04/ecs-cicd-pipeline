@@ -32,3 +32,7 @@ output "s3_artifacts_bucket" {
   description = "S3 artifacts bucket name"
   value       = aws_s3_bucket.artifacts.bucket
 }
+output "codestar_connection_arn" {
+  description = "CodeStar Connection ARN for GitHub"
+  value       = aws_codestarconnections_connection.github.arn
+}

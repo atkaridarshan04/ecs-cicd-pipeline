@@ -28,7 +28,7 @@ The Terraform configuration creates:
 | **ECR** | Image registry | Private repository with scanning |
 | **CodePipeline** | CI/CD orchestration | GitHub → Build → Deploy |
 | **CodeBuild** | Image building | Docker builds with ECR push |
-| **NAT Gateway** | Outbound connectivity | ECR access from private subnets |
+| **VPC Endpoints** | AWS service access | ECR, S3, CloudWatch Logs endpoints |
 
 ## 🔄 **Pipeline Overview**
 ![codepipeline-architecture](./docs/assets/cp-7.png)
@@ -47,7 +47,7 @@ Pick one of the deployment guides:
 - ✅ **ECS tasks in private subnets** - No direct internet access
 - ✅ **ALB in public subnets** - Controlled entry point
 - ✅ **Security groups** restrict traffic flow
-- ✅ **NAT Gateway** for controlled outbound access
+- ✅ **VPC Endpoints** for secure AWS service access
 
 ### IAM Security
 - ✅ **Least privilege roles** for each service
@@ -87,7 +87,7 @@ If CodePipeline fails:
 
 If ECS tasks can't pull images:
 
-1. **Verify NAT Gateway** is properly configured
+1. **Verify VPC Endpoints** are in "Available" state
 2. **Check route tables** for private subnets
 3. **Confirm ECS task execution role** has ECR permissions
 
